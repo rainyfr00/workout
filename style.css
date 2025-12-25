@@ -31,12 +31,22 @@ footer{text-align:center;padding:10px;font-size:.8rem;color:var(--muted)}
 
 /* Weekly comparison */
 .weekly-compare #weeklyCompare{display:grid;grid-template-columns:1fr;gap:8px}
-.compare-row{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02)}
+.compare-row{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);cursor:pointer}
 .compare-left{font-weight:600}
 .compare-mid{color:var(--muted);font-size:.95rem}
 .delta{min-width:64px;text-align:right}
 .delta.positive{color:#4ade80}
 .delta.negative{color:#fb7185}
+.compare-details{display:none;padding:8px;border-top:1px solid rgba(255,255,255,0.1);margin-top:8px}
+.compare-details ul{list-style:none;padding:0;margin:0}
+.compare-details li{padding:6px;border-radius:6px;background:rgba(0,0,0,0.2);margin-bottom:4px;cursor:pointer}
+.compare-details li .exercise{font-weight:600}
+.compare-details li .details{display:none;padding-top:4px;color:var(--muted);font-size:.9rem}
+.compare-row.expanded .compare-details{display:block}
+
+/* Dynamic form inputs */
+#repsContainer, #weightContainer{display:flex;flex-direction:column;gap:4px}
+#repsContainer input, #weightContainer input{padding:8px;border-radius:6px;border:0;background:rgba(255,255,255,0.02);color:var(--text)}
 
 @media(min-width:700px){
   main{max-width:720px;margin:0 auto}

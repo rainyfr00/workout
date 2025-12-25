@@ -32,6 +32,27 @@ function clearDay(dateStr){
   saveAll(all);
 }
 
+function updateDynamicInputs(){
+  const sets = parseInt(setsInput.value, 10) || 0;
+  repsContainer.innerHTML = '';
+  weightContainer.innerHTML = '';
+  if(sets > 0){
+    for(let i=1; i<=sets; i++){
+      const repInput = document.createElement('input');
+      repInput.type = 'text';
+      repInput.placeholder = `Reps set ${i}`;
+      repInput.className = 'dynamic-input';
+      repsContainer.appendChild(repInput);
+
+      const weightInput = document.createElement('input');
+      weightInput.type = 'text';
+      weightInput.placeholder = `Weight set ${i} (optional)`;
+      weightInput.className = 'dynamic-input';
+      weightContainer.appendChild(weightInput);
+    }
+  }
+}
+
 // UI
 const dateInput = document.getElementById('dateInput');
 const prevBtn = document.getElementById('prevDay');
@@ -40,6 +61,9 @@ const todayBtn = document.getElementById('todayBtn');
 const entriesList = document.getElementById('entriesList');
 const entryForm = document.getElementById('entryForm');
 const clearDayBtn = document.getElementById('clearDay');
+const setsInput = document.getElementById('sets');
+const repsContainer = document.getElementById('repsContainer');
+const weightContainer = document.getElementById('weightContainer');
 
 function render(){
   const dateStr = dateInput.value;
@@ -55,9 +79,12 @@ function render(){
   entries.forEach((e, i) => {
     const li = document.createElement('li');
     const h = document.createElement('h3');
-    h.textContent = e.exercise + (e.weight ? ` — ${e.weight}` : '');
+    h.textContent = e.exercise + (e.weight && e.weight.length ? ` — ${e.weight.join(', ')}` : '');
     const p = document.createElement('p');
-    p.textContent = `${e.sets ? e.sets + ' sets' : ''} ${e.reps ? '• ' + e.reps : ''} ${e.notes ? '• ' + e.notes : ''}`.trim();
+    const setsText = e.sets ? e.sets + ' sets' : '';
+    const repsText = e.reps && e.reps.length ? '• ' + e.reps.join(', ') : '';
+    const notesText = e.notes ? '• ' + e.notes : '';
+    p.textContent = `${setsText} ${repsText} ${notesText}`.trim();
     li.appendChild(h);
     li.appendChild(p);
     entriesList.appendChild(li);
@@ -112,6 +139,33 @@ function renderWeeklyComparison(){
     if(deltaCount>0 || deltaSets>0) right.classList.add('positive');
     if(deltaCount<0 || deltaSets<0) right.classList.add('negative');
     row.appendChild(left); row.appendChild(mid); row.appendChild(right);
+
+    // Add details
+    const details = document.createElement('div'); details.className='compare-details';
+    const entries = getEntriesFor(dCurr);
+    if(entries.length){
+      const ul = document.createElement('ul');
+      entries.forEach(e => {
+        const li = document.createElement('li');
+        const exerciseDiv = document.createElement('div'); exerciseDiv.className='exercise'; exerciseDiv.textContent = e.exercise;
+        const detailsDiv = document.createElement('div'); detailsDiv.className='details';
+        const setsText = e.sets ? e.sets + ' sets' : '';
+        const repsText = e.reps && e.reps.length ? 'Reps: ' + e.reps.join(', ') : '';
+        const weightText = e.weight && e.weight.length ? 'Weight: ' + e.weight.join(', ') : '';
+        const notesText = e.notes ? 'Notes: ' + e.notes : '';
+        detailsDiv.textContent = [setsText, repsText, weightText, notesText].filter(t => t).join(' • ');
+        li.appendChild(exerciseDiv);
+        li.appendChild(detailsDiv);
+        li.addEventListener('click', () => detailsDiv.style.display = detailsDiv.style.display === 'block' ? 'none' : 'block');
+        ul.appendChild(li);
+      });
+      details.appendChild(ul);
+    } else {
+      details.textContent = 'No entries';
+    }
+    row.appendChild(details);
+
+    row.addEventListener('click', () => row.classList.toggle('expanded'));
     container.appendChild(row);
   }
 }
@@ -133,14 +187,17 @@ entryForm.addEventListener('submit', (ev)=>{
   const dateStr = dateInput.value;
   const exercise = document.getElementById('exercise').value.trim();
   const sets = document.getElementById('sets').value.trim();
-  const reps = document.getElementById('reps').value.trim();
-  const weight = document.getElementById('weight').value.trim();
+  const reps = Array.from(repsContainer.querySelectorAll('input')).map(inp => inp.value.trim()).filter(v => v);
+  const weight = Array.from(weightContainer.querySelectorAll('input')).map(inp => inp.value.trim()).filter(v => v);
   const notes = document.getElementById('notes').value.trim();
   if(!exercise) return;
   addEntry(dateStr, {exercise, sets, reps, weight, notes, createdAt: new Date().toISOString()});
   entryForm.reset();
+  updateDynamicInputs();
   render();
 });
+
+setsInput.addEventListener('input', updateDynamicInputs);
 
 clearDayBtn.addEventListener('click', ()=>{
   if(!confirm('Clear all entries for this date?')) return;
@@ -151,5 +208,6 @@ clearDayBtn.addEventListener('click', ()=>{
 // init
 (function(){
   dateInput.value = isoDate();
+  updateDynamicInputs();
   render();
 })();
