@@ -41,6 +41,7 @@ html,body{height:100%;margin:0;font-family: 'Courier New', Courier, monospace;ba
   .btn{padding:12px 20px;font-size:15px}
 }
 
+<<<<<<< HEAD
 /* Mobile (portrait) */
 @media (max-width:600px){
   :root{--scale:2.5}
@@ -73,3 +74,42 @@ html,body{height:100%;margin:0;font-family: 'Courier New', Courier, monospace;ba
    - Edit scene text in `script.js` (scenes[] array).
    - Visual changes like colors and fonts live here in `style.css`.
 */
+=======
+/* Weekly comparison */
+.weekly-compare #weeklyCompare{display:grid;grid-template-columns:1fr;gap:8px}
+.compare-row{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);cursor:pointer}
+.compare-left{font-weight:600}
+.compare-mid{color:var(--muted);font-size:.95rem}
+.delta{min-width:64px;text-align:right}
+.delta.positive{color:#4ade80}
+.delta.negative{color:#fb7185}
+.compare-details{display:none;padding:8px;border-top:1px solid rgba(255,255,255,0.1);margin-top:8px}
+.compare-details ul{list-style:none;padding:0;margin:0}
+.compare-details li{padding:6px;border-radius:6px;background:rgba(0,0,0,0.2);margin-bottom:4px}
+.compare-details li .exercise{font-weight:600}
+.compare-details li .details{padding-top:4px;color:var(--muted);font-size:.9rem}
+.compare-row.expanded .compare-details{display:block}
+
+/* Day comparison */
+.day-compare{background:rgba(255,255,255,0.03);padding:12px;border-radius:12px}
+.day-compare h3{margin:0 0 12px 0;font-size:1.1rem;text-align:center}
+.day-compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.day-compare-col{background:rgba(0,0,0,0.25);padding:10px;border-radius:10px}
+.day-compare-header{font-weight:600;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.1);font-size:.9rem}
+.day-compare-header.current{color:var(--accent)}
+.day-compare-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.day-compare-list li{padding:8px;background:rgba(255,255,255,0.04);border-radius:6px;font-size:.85rem;line-height:1.5}
+.day-compare-empty{text-align:center;color:var(--muted);font-size:.9rem;padding:20px 0}
+
+/* Dynamic form inputs */
+#repsContainer, #weightContainer{display:flex;flex-direction:column;gap:4px}
+#repsContainer input, #weightContainer input{padding:8px;border-radius:6px;border:0;background:rgba(255,255,255,0.02);color:var(--text)}
+
+@media(min-width:700px){
+  main{max-width:720px;margin:0 auto}
+}
+
+@media(max-width:600px){
+  .day-compare-grid{grid-template-columns:1fr}
+}
+>>>>>>> 5731997 (good features added)

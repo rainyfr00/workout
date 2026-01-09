@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Mobile Workout Logger</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Workout Logger</h1>
+      <div class="date-controls">
+        <button id="prevDay">◀</button>
+        <input type="date" id="dateInput" />
+        <button id="nextDay">▶</button>
+        <button id="todayBtn">Today</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="add-entry">
+        <h2>Add Workout</h2>
+        <form id="entryForm">
+          <input id="exercise" placeholder="Exercise (e.g., Squat)" required />
+          <input id="sets" type="number" min="0" placeholder="Sets" />
+          <input id="weight" placeholder="Weight (optional)" />
+          <textarea id="notes" placeholder="Notes (optional)"></textarea>
+          <div id="repsContainer"></div>
+          <div id="weightContainer"></div>
+          <div class="form-actions">
+            <button type="submit">Save</button>
+            <button type="button" id="clearDay">Clear Day</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="entries">
+        <h2>Entries</h2>
+        <ul id="entriesList"></ul>
+      </section>
+
+      <section class="weekly-compare">
+        <h2>Weekly Comparison</h2>
+        <div id="weeklyCompare"></div>
+      </section>
+
+      <section class="day-compare">
+        <div id="dayCompare"></div>
+      </section>
+    </main>
+
+    <footer>
+      <small>Stored locally on this device. Use the date picker to view past logs.</small>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
