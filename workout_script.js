@@ -48,7 +48,7 @@ function updateDynamicInputs(){
       const weightInput = document.createElement('input');
       weightInput.type = 'text';
       weightInput.inputMode = 'decimal';
-      weightInput.placeholder = `Weight set ${i} (optional)`;
+      weightInput.placeholder = `Weight set ${i}`;
       weightInput.className = 'dynamic-input';
       weightContainer.appendChild(weightInput);
     }
